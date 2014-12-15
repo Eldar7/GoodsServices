@@ -2,7 +2,7 @@
 venv/
 *.pyc
 *.sqlite3
-#TestProject/settings.py
+TestProject/settings.py
 venv.bat
 
 # Created by .gitignore support plugin (hsz.mobi)
