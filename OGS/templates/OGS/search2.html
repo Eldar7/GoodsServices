@@ -1,0 +1,34 @@
+{% extends 'OGS/index2.html' %}
+{% block Main %}
+    {% if results %}
+        <h3>Результаты поиска услуг:</h3>
+        <ul class="address">
+
+            {% for result in results %}
+
+                <li><h4>{{ result }}</h4></li>
+                <p>
+                    {% if result.organization_set.all %}
+                        Организации:
+                        {% for org in result.organization_set.all %}
+                            {{ org }},
+                        {% endfor %}
+                    {% else %}
+                        Нет организаций
+                    {% endif %}
+                </p>
+
+            {% endfor %}
+        </ul>
+        <div style="text-align: center">
+        <ul class="pagination">
+        {% for p in results.paginator.page_range %}
+<li {% ifequal p page %}class="active"{% endifequal %}>
+    <a href="?{{ queries.urlencode }}&amp;page={{ p }}{% if init %}&amp;order={{ order }}{% endif %}">{{ p }}</a></li>
+        {% endfor %}
+        </ul>
+        </div>
+    {% else %}
+        <h3>Поиск дал 0 результатов.</h3>
+    {% endif %}
+{% endblock %}

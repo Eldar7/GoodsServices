@@ -1,0 +1,66 @@
+{% extends 'OGS/index.html' %}
+{% block Main %}
+    {% if results %}
+        <h3>Результаты поиска услуг:</h3>
+        <script type='text/javascript' src='https://code.jquery.com/jquery-1.7.1.js'></script>
+        <script type='text/javascript'>//<![CDATA[
+        var SimpleTabs = {
+            prepare: function (oTabs) {
+                var oThis = this;
+                this.oTabs = oTabs;
+                this.oTabs.children('.tab').click(function () {
+                    var oTab = jQuery(this);
+                    oTab.siblings('.current').removeClass('current').end().addClass('current');
+                    jQuery(oTab.attr('href')).siblings('.current').hide().removeClass('current').end().show().addClass('current');
+                    return false;
+                });
+            }
+        }
+        //]]>
+        </script>
+        <style type="text/css">
+            .simple_tabs .tab.current {
+                background: #337ab7;
+                color: #ffffff;
+            }
+        </style>
+        <div class="simple_tabs_section current" id="1">
+            <ul>
+                {% for result in results %}
+
+                    <li><h4>{{ result }}</h4></li>
+                    <p>
+                        {% if result.organization_set.all %}
+                            Организации:
+                            {% for org in result.organization_set.all %}
+                                {{ org }},
+                            {% endfor %}
+                        {% else %}
+                            Нет организаций
+                        {% endif %}
+                    </p>
+
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="simple_tabs_section" id="2" style="display: none">
+            2
+        </div>
+        <div class="simple_tabs_section" id="3" style="display: none">
+            3
+        </div>
+
+        <div style="text-align: center">
+            <div id="my_tabs" class="btn-group simple_tabs">
+                <a href="#1" class="tab btn btn-default current">1</a>
+                <a href="#2" class="tab btn btn-default">2</a>
+                <a href="#3" class="tab btn btn-default">3</a>
+            </div>
+        </div>
+        <script type="text/javascript">
+            SimpleTabs.prepare(jQuery('#my_tabs'));
+        </script>
+    {% else %}
+        <h3>Поиск дал 0 результатов.</h3>
+    {% endif %}
+{% endblock %}
