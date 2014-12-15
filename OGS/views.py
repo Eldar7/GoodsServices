@@ -21,9 +21,16 @@ def search(request):
         services = GoodsServices.objects.filter(name__contains=phrase)
         n = len(services)
         order = random.sample(range(n), n)
-        results = [services[i] for i in order]
-        args["results"] = [results[0:5], results[5:10]]
-        #TODO: выдавать пары {results[0:5], i} чтоб проходить по ним и видеть какой номер 5ки
+        reorder = [services[i] for i in order]
+        reorder = [reorder[i:i + 5] for i in range(0, len(reorder), 5)]
+        results = []
+        group = {}
+        for i, block in enumerate(reorder):
+            group["block"] = block
+            group["page"] = i+1
+            results.append(group)
+            group = {}
+        args["results"] = results
     return render_to_response('OGS/search.html', args)
 
 
