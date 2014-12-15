@@ -26,14 +26,15 @@
             {% endfor %}
         </ul>
         <div style="text-align: center">
-        <ul class="pagination">
-        {% for p in results.paginator.page_range %}
-<li {% ifequal p page %}class="active"{% endifequal %}>
-    <a href="?{{ queries.urlencode }}&amp;page={{ p }}{% if init %}&amp;order={{ order }}{% endif %}">{{ p }}</a></li>
-        {% endfor %}
-        </ul>
+            <ul class="pagination">
+                {% for p in results.paginator.page_range %}
+                    <li {% ifequal p page %}class="active"{% endifequal %}>
+                        <a href="?{{ queries.urlencode }}&amp;page=
+                                {{ p }}{% if init %}&amp;order={{ order }}{% endif %}">{{ p }}</a></li>
+                {% endfor %}
+            </ul>
         </div>
     {% else %}
-        <h3>Поиск дал 0 результатов.</h3>
+        <h3>Поиск по фразе "{{ phrase }}" дал 0 результатов.</h3>
     {% endif %}
 {% endblock %}
