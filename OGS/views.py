@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 import random
 import ast
 
+
 def index(request):
     args = {}
     return render_to_response('OGS/index.html', args)
@@ -46,14 +47,12 @@ def search2(request):
         services = GoodsServices.objects.filter(name__contains=phrase)
         if 'order' in queries_without_page:
             order = ast.literal_eval(request.GET["order"])
-            print(type(order))
         else:
             n = len(services)
             order = random.sample(range(n), n)
             args["init"] = 1
         args["order"] = order
         results = [services[i] for i in order]
-        args["results"] = results
         page = Paginator(results, 5)
         args["page"] = page_number
         args["results"] = page.page(page_number)
