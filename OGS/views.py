@@ -19,6 +19,7 @@ def search(request):
     args = {}
     if request.GET:
         phrase = request.GET["q"]
+        args["phrase"] = phrase
         services = GoodsServices.objects.filter(name__contains=phrase)
         n = len(services)
         order = random.sample(range(n), n)
@@ -44,6 +45,7 @@ def search2(request):
             page_number = int(request.GET["page"])
             del queries_without_page['page']
         phrase = request.GET["q"]
+        args["phrase"] = phrase
         services = GoodsServices.objects.filter(name__contains=phrase)
         if 'order' in queries_without_page:
             order = ast.literal_eval(request.GET["order"])

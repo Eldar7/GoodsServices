@@ -1,7 +1,11 @@
 {% extends 'OGS/index.html' %}
 {% block Main %}
     {% if results %}
-        <h3>Результаты поиска услуг:</h3>
+        {% if phrase %}
+            <h3>Результаты поиска услуг по фразе "{{ phrase }}":</h3>
+        {% else %}
+            <h3>Результаты поиска всех услуг:</h3>
+        {% endif %}
         <script type='text/javascript' src='https://code.jquery.com/jquery-1.7.1.js'></script>
         <script type='text/javascript'>//<![CDATA[
         var SimpleTabs = {
@@ -25,8 +29,8 @@
             }
         </style>
         {% for result in results %}
-        <div class="simple_tabs_section{% ifequal result.page 1 %} current"{% else %}"
-            style="display: none"{% endifequal %} id="{{ result.page }}">
+            <div class="simple_tabs_section{% ifequal result.page 1 %} current"{% else %}"
+                style="display: none"{% endifequal %} id="{{ result.page }}">
             <ul>
                 {% for service in result.block %}
                     <li><h4>{{ service }}</h4></li>
@@ -42,14 +46,14 @@
                     </p>
                 {% endfor %}
             </ul>
-        </div>
+            </div>
         {% endfor %}
 
         <div style="text-align: center">
             <div id="my_tabs" class="btn-group simple_tabs">
                 {% for result in results %}
-                <a href="#{{ result.page }}"
-                   class="tab btn btn-default{% ifequal result.page 1 %} current{% endifequal %}">{{ result.page }}</a>
+                    <a href="#{{ result.page }}"
+                       class="tab btn btn-default{% ifequal result.page 1 %} current{% endifequal %}">{{ result.page }}</a>
                 {% endfor %}
             </div>
         </div>
